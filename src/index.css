@@ -1,0 +1,172 @@
+@import "tailwindcss";
+
+@theme {
+  --color-rf-navy-deep: #050A3A;
+  --color-rf-navy-dark: #08145C;
+  --color-rf-navy-surface: #0c186e;
+  --color-rf-blue-royal: #2637C8;
+  --color-rf-blue-electric: #315CFF;
+  --color-rf-violet: #6C24E8;
+  --color-rf-purple: #8A20E8;
+  --color-rf-magenta: #C817D9;
+  --color-rf-lavender: #F6F4FF;
+
+ --font-display: 'Barlow Condensed', system-ui, sans-serif;
+--font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  color-scheme: light dark;
+}
+
+html.light {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+html.light body {
+  background-color: #F8FAFC;
+  color: #050A3A;
+}
+
+html.dark body {
+  background-color: #050A3A;
+  color: #F1F5F9;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #050A3A;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #08145C;
+  border-radius: 4px;
+  border: 1px solid rgba(49, 92, 255, 0.2);
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2637C8;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+  border: 1px solid rgba(203, 213, 225, 0.6);
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Fine technical grid background */
+.rf-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(49, 92, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(49, 92, 255, 0.06) 1px, transparent 1px);
+}
+
+.rf-grid-pattern-dense {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(108, 36, 232, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(108, 36, 232, 0.07) 1px, transparent 1px);
+}
+
+/* Ambient glow animations */
+@keyframes ambientPulse {
+  0%, 100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.08);
+  }
+}
+
+.animate-ambient-pulse {
+  animation: ambientPulse 8s ease-in-out infinite;
+}
+
+/* Subtle floating keyframe animations for layered section elements */
+@keyframes subtleFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes subtleFloatReverse {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+@keyframes subtleFloatSlow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.4deg);
+  }
+}
+
+@keyframes subtleFloatGentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-subtle-float {
+  animation: subtleFloat 6.5s ease-in-out infinite;
+}
+
+.animate-subtle-float-reverse {
+  animation: subtleFloatReverse 7.8s ease-in-out infinite;
+}
+
+.animate-subtle-float-slow {
+  animation: subtleFloatSlow 9.5s ease-in-out infinite;
+}
+
+.animate-subtle-float-gentle {
+  animation: subtleFloatGentle 8s ease-in-out infinite 1.2s;
+}
+
+/* Smooth motion respect */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
