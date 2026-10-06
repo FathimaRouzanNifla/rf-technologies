@@ -26,25 +26,16 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     name: '',
     email: '',
     phone: '',
-    service: selectedServicePreload || 'Web Development',
+    service: '',
     message: '',
   });
 
   const [errors, setErrors] = useState<
     Partial<Record<keyof ContactFormData, string>>
   >({});
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
-  // Sync if prop changes
-  React.useEffect(() => {
-    if (selectedServicePreload) {
-      setFormData((prev) => ({
-        ...prev,
-        service: selectedServicePreload,
-      }));
-    }
-  }, [selectedServicePreload]);
 
   const serviceOptions = [
     'Logo Design',
@@ -73,6 +64,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
       newErrors.email = 'Please provide a valid email address.';
     }
 
+    if (!formData.service.trim()) {
+      newErrors.service = 'Please select a service.';
+    }
+
     if (!formData.message.trim()) {
       newErrors.message =
         'Please provide brief details about your idea or project.';
@@ -81,11 +76,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
-  // Web3Forms submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -197,7 +190,7 @@ Email: ${formData.email || 'N/A'}`
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
 
-          {/* Left Column: Direct channels & statement */}
+          {/* Left Column */}
           <div className="lg:col-span-5 space-y-8">
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -232,7 +225,7 @@ Email: ${formData.email || 'N/A'}`
             {/* Direct Official Contact Cards */}
             <div className="space-y-4 pt-2">
 
-              {/* WhatsApp Direct Action */}
+              {/* WhatsApp */}
               <a
                 href="https://wa.me/94729658842"
                 target="_blank"
@@ -245,6 +238,7 @@ Email: ${formData.email || 'N/A'}`
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
+
                     <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-500 group-hover:scale-105 transition-transform">
                       <MessageSquare className="w-6 h-6" />
                     </div>
@@ -286,7 +280,7 @@ Email: ${formData.email || 'N/A'}`
                 </div>
               </a>
 
-              {/* LinkedIn Direct Action */}
+              {/* LinkedIn */}
               <a
                 href="https://www.linkedin.com/company/rftechnologieshq/posts/?viewAsMember=true"
                 target="_blank"
@@ -299,6 +293,7 @@ Email: ${formData.email || 'N/A'}`
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
+
                     <div className="w-12 h-12 rounded-xl bg-[#315CFF]/15 border border-[#315CFF]/30 flex items-center justify-center text-[#315CFF] group-hover:scale-105 transition-transform">
                       <Linkedin className="w-6 h-6" />
                     </div>
@@ -346,7 +341,7 @@ Email: ${formData.email || 'N/A'}`
                 </div>
               </a>
 
-              {/* Email Direct Action */}
+              {/* Email */}
               <a
                 href="mailto:rftechnologies.lk@gmail.com"
                 className={`group block p-5 rounded-2xl border transition-all duration-300 hover:-translate-y-0.5 ${
@@ -357,6 +352,7 @@ Email: ${formData.email || 'N/A'}`
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
+
                     <div className="w-12 h-12 rounded-xl bg-[#6C24E8]/15 border border-[#6C24E8]/30 flex items-center justify-center text-[#6C24E8] group-hover:scale-105 transition-transform">
                       <Mail className="w-6 h-6" />
                     </div>
@@ -406,7 +402,7 @@ Email: ${formData.email || 'N/A'}`
             </div>
           </div>
 
-          {/* Right Column: High-Precision Contact Form */}
+          {/* Right Column */}
           <div className="lg:col-span-7">
             <div
               className={`rounded-3xl border p-7 sm:p-10 shadow-2xl relative overflow-hidden transition-colors duration-300 ${
@@ -415,7 +411,7 @@ Email: ${formData.email || 'N/A'}`
                   : 'bg-white border-slate-200/90 shadow-slate-200/70'
               }`}
             >
-              {/* Top gradient accent */}
+
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#315CFF] via-[#6C24E8] to-[#C817D9]" />
 
               {isSuccess ? (
@@ -446,8 +442,7 @@ Email: ${formData.email || 'N/A'}`
                           : 'text-slate-600'
                       }`}
                     >
-                      Thank you for reaching out to RF Technologies. We have received your inquiry
-                      regarding{' '}
+                      Thank you for reaching out to RF Technologies. We have received your inquiry regarding{' '}
                       <strong
                         className={
                           isDark
@@ -461,8 +456,8 @@ Email: ${formData.email || 'N/A'}`
                     </p>
                   </div>
 
-                  {/* Immediate WhatsApp Mirror Button */}
                   <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
+
                     <button
                       type="button"
                       onClick={handleWhatsAppRedirect}
@@ -478,13 +473,15 @@ Email: ${formData.email || 'N/A'}`
                       type="button"
                       onClick={() => {
                         setIsSuccess(false);
+
                         setFormData({
                           name: '',
                           email: '',
                           phone: '',
-                          service: 'Web Development',
+                          service: '',
                           message: '',
                         });
+
                         setErrors({});
                       }}
                       className={`w-full sm:w-auto px-6 py-3.5 rounded-xl text-xs font-semibold uppercase tracking-[0.02em]r transition-colors ${
@@ -503,6 +500,7 @@ Email: ${formData.email || 'N/A'}`
                   className="space-y-5"
                   noValidate
                 >
+
                   <div
                     className={`text-xs font-mono uppercase tracking-[0.02em]r mb-2 ${
                       isDark
@@ -513,7 +511,7 @@ Email: ${formData.email || 'N/A'}`
                     PROJECT INQUIRY SPECIFICATION
                   </div>
 
-                  {/* Name and Email in 2 columns */}
+                  {/* Name and Email */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
                     {/* Name */}
@@ -660,12 +658,14 @@ Email: ${formData.email || 'N/A'}`
                             : 'text-slate-700'
                         }`}
                       >
-                        Primary Service
+                        Primary Service{' '}
+                        <span className="text-[#C817D9]">*</span>
                       </label>
 
                       <select
                         id="contact-service"
                         name="service"
+                        required
                         value={formData.service}
                         onChange={(e) =>
                           setFormData({
@@ -674,11 +674,25 @@ Email: ${formData.email || 'N/A'}`
                           })
                         }
                         className={`w-full px-4 py-3 rounded-xl border text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[#315CFF] cursor-pointer ${
-                          isDark
+                          errors.service
+                            ? 'border-rose-500/80'
+                            : isDark
                             ? 'bg-[#050A3A] border-white/10 hover:border-white/20 text-white'
                             : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-[#050A3A] focus:bg-white'
                         }`}
                       >
+                        <option
+                          value=""
+                          disabled
+                          className={
+                            isDark
+                              ? 'bg-[#050A3A] text-slate-400'
+                              : 'bg-white text-slate-400'
+                          }
+                        >
+                          Select Service
+                        </option>
+
                         {serviceOptions.map((opt) => (
                           <option
                             key={opt}
@@ -693,6 +707,13 @@ Email: ${formData.email || 'N/A'}`
                           </option>
                         ))}
                       </select>
+
+                      {errors.service && (
+                        <p className="mt-1.5 text-xs text-rose-500 flex items-center gap-1 font-mono">
+                          <AlertCircle className="w-3.5 h-3.5" />
+                          <span>{errors.service}</span>
+                        </p>
+                      )}
                     </div>
                   </div>
 
