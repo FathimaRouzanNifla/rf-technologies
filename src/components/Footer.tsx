@@ -1,5 +1,4 @@
 import React from 'react';
-import { RFLogo } from './RFLogo';
 import { ArrowUpRight, MessageSquare, Linkedin, ArrowUp, Mail } from 'lucide-react';
 import { SERVICES_DATA } from '../data/contentData';
 import { useTheme } from '../context/ThemeContext';
@@ -202,8 +201,8 @@ export const Footer: React.FC<FooterProps> = ({ onSelectServiceTitle }) => {
           }`}
         >
           <div>
-            © 2026 RF Technologies. All rights reserved.
-          </div>
+  © {new Date().getFullYear()} RF Technologies. All rights reserved.
+</div>
 
           <div className="flex items-center gap-6">
             <span className="text-[#315CFF] font-semibold">Ideas That Inspire. Technology That Delivers.</span>

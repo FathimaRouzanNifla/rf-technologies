@@ -20,32 +20,136 @@ export const ServiceVisual: React.FC<ServiceVisualProps> = ({ visualType, isHove
   switch (visualType) {
     case 'logo-geometry':
       return (
-        <div className={`relative w-full h-44 rounded-xl border p-4 flex items-center justify-center overflow-hidden transition-colors duration-300 ${containerBg}`}>
-          <div className={`absolute inset-0 rf-grid-pattern ${isDark ? 'opacity-60' : 'opacity-25'}`} />
-          <svg viewBox="0 0 200 140" className="w-full h-full relative z-10" fill="none">
-            <circle cx="100" cy="70" r="48" stroke="#315CFF" strokeWidth="1" strokeDasharray="3 3" opacity={isDark ? '0.6' : '0.4'} />
-            <circle cx="100" cy="70" r="32" stroke="#6C24E8" strokeWidth="1" strokeDasharray="2 2" opacity={isDark ? '0.7' : '0.5'} />
-            <circle cx="100" cy="70" r="16" stroke="#C817D9" strokeWidth="1" opacity={isDark ? '0.8' : '0.6'} />
-            <line x1="40" y1="20" x2="160" y2="120" stroke="#315CFF" strokeWidth="0.8" opacity={isDark ? '0.4' : '0.3'} />
-            <line x1="40" y1="120" x2="160" y2="20" stroke="#C817D9" strokeWidth="0.8" opacity={isDark ? '0.4' : '0.3'} />
-            <path
-              d="M 85 45 V 95 H 98 V 74 H 108 L 120 95 H 134 L 120 73 C 128 70 133 64 133 56 C 133 47 125 45 110 45 H 85 Z M 98 55 H 110 C 115 55 119 57 119 61 C 119 65 115 67 110 67 H 98 V 55 Z"
-              fill="url(#logoGeomGrad)"
-              className="transition-transform duration-500"
-              style={{ transform: isHovered ? 'scale(1.05)' : 'scale(1)', transformOrigin: 'center' }}
-            />
-            <defs>
-              <linearGradient id="logoGeomGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#315CFF" />
-                <stop offset="50%" stopColor="#6C24E8" />
-                <stop offset="100%" stopColor="#C817D9" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <span className={`absolute bottom-2.5 right-3 text-[9px] font-mono ${textMuted}`}>
-            RATIO 1:1.618
-          </span>
-        </div>
+        <div
+  className={`group relative w-full h-44 rounded-2xl p-[1px] overflow-hidden transition-shadow duration-300
+    bg-gradient-to-br from-[#315CFF]/50 via-[#6C24E8]/30 to-[#C817D9]/50
+    ${isHovered ? 'shadow-[0_0_32px_-4px_rgba(108,36,232,0.45)]' : 'shadow-lg'}`}
+>
+  <div
+    className={`relative w-full h-full rounded-[15px] flex items-center justify-center overflow-hidden transition-colors duration-300 ${containerBg}`}
+  >
+    {/* Grid, faded toward the edges */}
+    <div
+      className={`absolute inset-0 rf-grid-pattern ${isDark ? 'opacity-50' : 'opacity-20'}`}
+      style={{
+        maskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)',
+        WebkitMaskImage: 'radial-gradient(ellipse at center, black 30%, transparent 75%)',
+      }}
+    />
+
+    {/* Ambient glow */}
+    <div
+      className="absolute w-44 h-44 rounded-full blur-3xl"
+      style={{
+        background:
+          'radial-gradient(circle, rgba(108,36,232,0.55) 0%, rgba(49,92,255,0.25) 50%, transparent 70%)',
+        opacity: isHovered ? (isDark ? 0.85 : 0.55) : isDark ? 0.6 : 0.38,
+      }}
+    />
+
+    {/* Corner marks */}
+    {[
+      'top-3 left-3 border-t border-l',
+      'top-3 right-3 border-t border-r',
+      'bottom-3 left-3 border-b border-l',
+      'bottom-3 right-3 border-b border-r',
+    ].map((pos) => (
+      <span
+        key={pos}
+        className={`absolute w-3 h-3 ${pos} ${isDark ? 'border-white/25' : 'border-slate-400/60'}`}
+      />
+    ))}
+
+    <svg viewBox="0 0 200 140" className="w-full h-full relative z-10" fill="none">
+      <defs>
+        {/* Brand gradient for the tile */}
+        <linearGradient id="tileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#315CFF" />
+          <stop offset="55%" stopColor="#6C24E8" />
+          <stop offset="100%" stopColor="#C817D9" />
+        </linearGradient>
+
+        {/* Glossy highlight over the top half */}
+        <linearGradient id="tileGloss" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.35" />
+          <stop offset="55%" stopColor="#fff" stopOpacity="0.05" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0" />
+        </linearGradient>
+
+        {/* Inner border */}
+        <linearGradient id="tileStroke" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#fff" stopOpacity="0.7" />
+          <stop offset="100%" stopColor="#fff" stopOpacity="0.1" />
+        </linearGradient>
+
+        {/* Letter fill */}
+        <linearGradient id="letterGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#E4E8FF" />
+        </linearGradient>
+
+        <filter id="tileShadow" x="-40%" y="-40%" width="180%" height="190%">
+          <feDropShadow dx="0" dy="6" stdDeviation="6" floodColor="#6C24E8" floodOpacity="0.55" />
+        </filter>
+        <filter id="letterShadow" x="-30%" y="-30%" width="160%" height="170%">
+          <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" floodColor="#1B0B52" floodOpacity="0.4" />
+        </filter>
+
+        <clipPath id="tileClip">
+          <rect x="66" y="36" width="68" height="68" rx="19" />
+        </clipPath>
+      </defs>
+
+      <g
+        className="transition-transform duration-300 ease-out"
+        style={{
+          transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+          transformOrigin: '100px 70px',
+        }}
+      >
+        {/* Tile */}
+        <rect
+          x="66" y="36" width="68" height="68" rx="19"
+          fill="url(#tileGrad)"
+          filter="url(#tileShadow)"
+        />
+
+        {/* Gloss, clipped to the tile */}
+        <g clipPath="url(#tileClip)">
+          <rect x="66" y="36" width="68" height="40" fill="url(#tileGloss)" />
+          {/* Soft light bloom in the bottom-right corner */}
+          <circle cx="130" cy="100" r="26" fill="#C817D9" opacity="0.35" />
+        </g>
+
+        {/* Inner border */}
+        <rect
+          x="66.5" y="36.5" width="67" height="67" rx="18.5"
+          stroke="url(#tileStroke)" strokeWidth="1"
+        />
+
+        {/* N monogram */}
+        <g filter="url(#letterShadow)">
+          {/* Left stem */}
+          <rect x="84" y="53" width="9" height="34" rx="2.2" fill="url(#letterGrad)" />
+          {/* Right stem */}
+          <rect x="107" y="53" width="9" height="34" rx="2.2" fill="url(#letterGrad)" />
+          {/* Diagonal, slightly translucent for a layered look */}
+          <path
+            d="M 84 53 H 94.5 L 116 87 H 105.5 Z"
+            fill="url(#letterGrad)"
+            opacity="0.82"
+          />
+        </g>
+
+        {/* Small accent cut at the top-right of the N */}
+        <rect x="107" y="53" width="9" height="4" rx="2" fill="#fff" opacity="0.5" />
+      </g>
+    </svg>
+
+    {/* Top edge highlight */}
+    <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+  </div>
+</div>
       );
 
     case 'graphic-editorial':
