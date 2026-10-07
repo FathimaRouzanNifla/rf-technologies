@@ -3,6 +3,8 @@ import { RFLogo } from './RFLogo';
 import { ArrowUpRight, MessageSquare, Linkedin, ArrowUp, Mail } from 'lucide-react';
 import { SERVICES_DATA } from '../data/contentData';
 import { useTheme } from '../context/ThemeContext';
+import logoLight from "../assets/logo-light.png";
+import logoDark from "../assets/logo-dark.png";
 
 interface FooterProps {
   onSelectServiceTitle: (title: string) => void;
@@ -67,7 +69,28 @@ export const Footer: React.FC<FooterProps> = ({ onSelectServiceTitle }) => {
         >
           {/* Col 1: Brand & Tagline (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
-            <RFLogo variant="compact" showTagline={true} />
+            <a
+            href="#home"
+            onClick={(e) => handleNavClick(e, '#home')}
+            className="group flex items-center gap-3.5 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#315CFF] transition-transform"
+            aria-label="RF Technologies Home"
+          >
+            <img
+              src={theme === "dark" ? logoDark : logoLight}
+              alt="RF Technologies"
+              className="h-12 w-auto object-contain transition-opacity duration-300"
+            />
+
+            <span
+              className={`font-display font-bold text-xl tracking-tight transition-colors duration-300 ${
+                theme === "dark"
+                  ? "text-white"
+                  : "text-[#050A3A]"
+              }`}
+            >
+              RF Technologies
+            </span>
+          </a>
 
             <p
               className={`text-sm leading-relaxed font-light max-w-sm transition-colors ${
